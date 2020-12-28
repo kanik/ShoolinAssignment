@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+    <title>Sort Accounts</title>
+	</head>
+<body>
+
+	<p>Click the button to sort an array.</p>
+<button onclick="myFunction()">Click</button>
+<ul id="myId"></ul>
+
+<script>
+    const data =  [
+  {
+    name: 'Mary',
+    payeeType: 'PAY_ANYONE',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'Zachary',
+    payeeType: 'BPAY',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'Andy',
+    payeeType: 'BPAY',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'Sam',
+    payeeType: 'LINKED',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'John',
+    payeeType: 'BPAY',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'Alex',
+    payeeType: 'PAY_ANYONE',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'Zac',
+    payeeType: 'LINKED',
+    primary: { isPrimary: true },
+  },
+  {
+    name: 'Angela',
+    payeeType: 'LINKED',
+    primary: { isPrimary: false },
+  },
+  {
+    name: 'Ben',
+    payeeType: 'PAY_ANYONE',
+    primary: { isPrimary: false },
+  },
+]
+
+    const primaryAccount = data.filter(o => o.primary.isPrimary)
+    const filterByAccountName = name => data.filter(o => o.payeeType === name)
+    const sortByName = g => {
+      return g.sort((a, b) => {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    const myFunction = () => {
+      const ul = document.getElementById('myId');
+      while (ul.firstChild) {
+          ul.removeChild(ul.firstChild);
+      }
+      const names = [
+        ...primaryAccount,
+        ...sortByName(filterByAccountName('PAY_ANYONE')),
+        ...sortByName(filterByAccountName('LINKED')),
+        ...sortByName(filterByAccountName('BPAY'))
+      ]
+      names.forEach(function(name){
+        const li = document.createElement('li');
+        ul.appendChild(li);
+        li.innerHTML += name.name;
+      });
+    }
+</script>
+</body>
+</html>
